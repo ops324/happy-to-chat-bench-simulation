@@ -1,0 +1,29 @@
+anthropic:
+  api_key_env: "ANTHROPIC_API_KEY"
+  model: "claude-haiku-4-5-20251001"
+  max_tokens: 4096
+  temperature: 1.0
+
+loop:
+  stagnation_threshold: 10
+
+excitement:
+  base_threshold: 7
+  cooldown_cycles: 3
+  adaptive: true
+
+search:
+  max_results: 5
+  max_text_chars: 3000
+  timeout_seconds: 10
+
+logging:
+  log_dir: "metacog/logs"
+  console: true
+
+prompt:
+  max_observations_chars: 2000
+  excitement_history_size: 10
+
+orchestrator:
+  meta_trigger_every_n_steps: 5

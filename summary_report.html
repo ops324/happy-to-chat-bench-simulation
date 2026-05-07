@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>公園における社交装置の効果検証 — A/B 比較レポート</title>
+<style>
+:root {
+  --bg: #faf9f5;
+  --card: #ffffff;
+  --border: #e6dfd0;
+  --border-strong: #d8cfb9;
+  --coral: #cc785c;
+  --coral-deep: #b35d44;
+  --tan: #a07a55;
+  --gold: #c89b3c;
+  --text: #1f1d1b;
+  --muted: #6b6660;
+  --muted-2: #8e887f;
+  --peach: #fdf3eb;
+  --peach-deep: #f7e3d0;
+  --sand: #f3ede0;
+  --sand-deep: #e8dec8;
+  --rule: #ece5d4;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 1920px;
+  height: 1280px;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'IPAGothic', 'Hiragino Sans', 'Noto Sans CJK JP', 'Yu Gothic', sans-serif;
+  font-weight: 300;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+}
+
+.page {
+  width: 1920px;
+  height: 1280px;
+  padding: 26px 32px 22px;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 96px 312px 312px 348px 78px;
+  gap: 14px;
+}
+
+/* ===== Header ===== */
+.header {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 24px;
+  padding: 0 4px;
+}
+.brand-mark {
+  width: 66px; height: 66px;
+  border-radius: 14px;
+  background: var(--coral);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff;
+  font-family: 'Inter', 'Helvetica Neue', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
+}
+.title-block h1 {
+  font-size: 36px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text);
+  line-height: 1.15;
+}
+.title-block .sub {
+  margin-top: 6px;
+  font-size: 15px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  font-weight: 400;
+}
+.title-block .sub em {
+  font-style: normal;
+  color: var(--coral);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.headline-card {
+  background: var(--peach);
+  border: 1px solid var(--peach-deep);
+  border-radius: 14px;
+  padding: 14px 22px;
+  width: 560px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.headline-card .icon {
+  flex-shrink: 0;
+  width: 38px; height: 38px;
+  background: var(--coral);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.headline-card .label {
+  color: var(--coral-deep);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.headline-card .text {
+  color: var(--text);
+  font-size: 14.5px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* ===== Card ===== */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+.card-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 12px;
+  min-width: 0;
+}
+.card-num {
+  flex-shrink: 0;
+  width: 26px; height: 26px;
+  background: var(--text);
+  color: #fff;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  display: flex; align-items: center; justify-content: center;
+  letter-spacing: 0;
+}
+.card-num.coral { background: var(--coral); }
+.card-num.tan { background: var(--tan); }
+.card-num.gold { background: var(--gold); }
+.card-title {
+  font-size: 15.5px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.card-sub {
+  font-size: 11.5px;
+  color: var(--muted);
+  margin-left: auto;
+  letter-spacing: 0.04em;
+  font-weight: 400;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.card-body {
+  flex: 1;
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+}
+.card-foot {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--rule);
+  font-size: 11.5px;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+  font-weight: 400;
+}
+
+/* ===== Section 1: 先に結論 ===== */
+.s1 { grid-column: 1 / 4; grid-row: 2 / 3; }
+.bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.bullets li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+.bullets .num {
+  flex-shrink: 0;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--peach);
+  color: var(--coral-deep);
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 1px;
+}
+.bullets b { color: var(--coral-deep); font-weight: 600; }
+.bullets .neg { color: var(--gold); font-weight: 600; }
+
+/* ===== Section 2: 確認セット ===== */
+.s2 { grid-column: 4 / 8; grid-row: 2 / 3; }
+.cond-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  height: 100%;
+}
+.cond-card {
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cond-card.a {
+  background: var(--peach);
+  border: 1px solid var(--peach-deep);
+}
+.cond-card.b {
+  background: var(--sand);
+  border: 1px solid var(--sand-deep);
+}
+.cond-card .tag {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--coral-deep);
+  text-transform: uppercase;
+}
+.cond-card.b .tag { color: var(--tan); }
+.cond-card .name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.01em;
+}
+.cond-card .signal {
+  margin-top: 4px;
+  font-size: 11.5px;
+  color: var(--muted);
+  font-weight: 400;
+  line-height: 1.55;
+  border-left: 2px solid var(--coral);
+  padding: 2px 0 2px 9px;
+}
+.cond-card.b .signal { border-left-color: var(--tan); }
+.cond-card .meta {
+  margin-top: auto;
+  display: flex;
+  gap: 10px;
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 500;
+}
+.cond-card .meta b { color: var(--text); font-family: 'Inter', sans-serif; font-weight: 700; }
+
+.diff-note {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: var(--bg);
+  border: 1px dashed var(--border-strong);
+  border-radius: 10px;
+  font-size: 11.5px;
+  color: var(--muted);
+  line-height: 1.5;
+  text-align: center;
+}
+.diff-note b { color: var(--coral-deep); font-weight: 600; }
+
+/* ===== Section 6: 結果テーブル ===== */
+.s6 { grid-column: 8 / 13; grid-row: 2 / 3; }
+.kpi-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+.kpi-table thead th {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  text-align: right;
+  padding: 6px 6px 8px;
+  border-bottom: 1px solid var(--rule);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.kpi-table thead th:first-child {
+  text-align: left;
+}
+.kpi-table thead th.a-col { color: var(--coral-deep); }
+.kpi-table thead th.b-col { color: var(--tan); }
+.kpi-table tbody td {
+  padding: 8px 6px;
+  border-bottom: 1px solid var(--rule);
+  text-align: right;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  color: var(--text);
+}
+.kpi-table tbody td:first-child {
+  text-align: left;
+  font-family: inherit;
+  color: var(--text);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.kpi-table tbody td.unit {
+  color: var(--muted);
+  font-weight: 400;
+  font-size: 11px;
+}
+.kpi-table tbody tr:last-child td {
+  border-bottom: none;
+}
+.kpi-table .a-cell { color: var(--coral-deep); font-weight: 700; }
+.kpi-table .b-cell { color: var(--tan); font-weight: 600; }
+.kpi-table .ratio { color: var(--text); font-weight: 700; }
+.kpi-table .ratio.up::after { content: " ↑"; color: var(--coral); }
+.kpi-table .ratio.down::after { content: " ↓"; color: var(--muted-2); }
+
+/* ===== Section 3: 中央メイン解説 ===== */
+.s3 { grid-column: 1 / 5; grid-row: 3 / 4; }
+.essence-block {
+  background: linear-gradient(180deg, var(--peach) 0%, transparent 100%);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+}
+.essence-block .lead {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--coral-deep);
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+}
+.essence-block .lead em {
+  font-style: normal;
+  background: linear-gradient(transparent 60%, rgba(204,120,92,0.20) 60%);
+  padding: 0 2px;
+}
+.essence-points {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.essence-points .row {
+  display: grid;
+  grid-template-columns: 78px 1fr;
+  gap: 10px;
+  align-items: start;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.essence-points .row .lbl {
+  color: var(--muted);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  padding-top: 1px;
+}
+.essence-points .row .val { color: var(--text); }
+.essence-points .row .val b { color: var(--coral-deep); font-weight: 600; }
+
+.deviceflow {
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.deviceflow .step {
+  flex: 1;
+  text-align: center;
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+.deviceflow .step b {
+  display: block;
+  color: var(--text);
+  font-size: 12.5px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.deviceflow .arrow {
+  color: var(--coral);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+/* ===== Section 4: 場所別分布 ===== */
+.s4 { grid-column: 5 / 9; grid-row: 3 / 4; }
+.bar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 4px;
+}
+.bar-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 1fr;
+  align-items: center;
+  gap: 8px;
+  font-size: 11.5px;
+}
+.bar-row .place {
+  color: var(--text);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.bar-cell {
+  position: relative;
+  height: 18px;
+  background: var(--bg);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.bar-cell .fill {
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+}
+.bar-cell.a .fill { background: var(--coral); }
+.bar-cell.b .fill { background: var(--tan); }
+.bar-cell .num {
+  position: absolute;
+  right: 6px; top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
+.bar-cell .num.outside {
+  color: var(--muted);
+  text-shadow: none;
+  right: auto;
+  left: 6px;
+}
+.bar-head {
+  display: grid;
+  grid-template-columns: 80px 1fr 1fr;
+  gap: 8px;
+  font-size: 10.5px;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.bar-head .a-h { color: var(--coral-deep); }
+.bar-head .b-h { color: var(--tan); }
+
+/* ===== Section 7: 創発テーマ ===== */
+.s7 { grid-column: 9 / 13; grid-row: 3 / 4; }
+.theme-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 4px;
+}
+.theme-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+.theme-card.a-side {
+  background: var(--peach);
+  border-color: var(--peach-deep);
+}
+.theme-card.b-side {
+  background: var(--sand);
+  border-color: var(--sand-deep);
+}
+.theme-card .tag {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--coral-deep);
+}
+.theme-card.b-side .tag { color: var(--tan); }
+.theme-card .topic {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-top: 2px;
+}
+.theme-card .pct {
+  font-family: 'Inter', sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--coral-deep);
+  letter-spacing: -0.02em;
+  margin-top: 4px;
+  line-height: 1;
+}
+.theme-card.b-side .pct { color: var(--tan); }
+.theme-card .pct .unit {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 500;
+  margin-left: 2px;
+}
+.theme-card .desc {
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.theme-foot {
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.5;
+  padding: 6px 8px;
+  background: var(--bg);
+  border-radius: 8px;
+}
+.theme-foot b { color: var(--text); font-weight: 600; }
+
+/* ===== Section 5: 流量グラフ ===== */
+.s5 { grid-column: 1 / 6; grid-row: 4 / 5; }
+.graphs-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  height: 100%;
+}
+.graph-block {
+  display: flex;
+  flex-direction: column;
+}
+.graph-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.graph-sub {
+  font-size: 10.5px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.graph-svg {
+  flex: 1;
+  width: 100%;
+  background: var(--bg);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+.legend {
+  display: flex;
+  gap: 14px;
+  margin-top: 6px;
+  font-size: 10.5px;
+  color: var(--muted);
+}
+.legend .swatch {
+  display: inline-block;
+  width: 18px; height: 3px;
+  border-radius: 2px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+.legend .a-sw { background: var(--coral); }
+.legend .b-sw { background: var(--tan); }
+.graph-stats {
+  display: flex;
+  gap: 12px;
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 4px;
+  font-weight: 500;
+}
+.graph-stats .num {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+}
+.graph-stats .a-num { color: var(--coral-deep); }
+.graph-stats .b-num { color: var(--tan); }
+
+/* ===== Section 8: 個別影響 ===== */
+.s8 { grid-column: 6 / 10; grid-row: 4 / 5; }
+.persona-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 2px;
+}
+.persona-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: var(--card);
+}
+.persona-card .who {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  font-weight: 500;
+}
+.persona-card .name {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text);
+  margin-top: 1px;
+}
+.persona-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 8px;
+}
+.persona-side {
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+.persona-side.a-side {
+  background: var(--peach);
+}
+.persona-side.b-side {
+  background: var(--sand);
+}
+.persona-side .tag {
+  font-family: 'Inter', sans-serif;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--coral-deep);
+}
+.persona-side.b-side .tag { color: var(--tan); }
+.persona-side .big {
+  font-family: 'Inter', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--coral-deep);
+  line-height: 1;
+  margin-top: 4px;
+  letter-spacing: -0.02em;
+}
+.persona-side.b-side .big { color: var(--tan); }
+.persona-side .big .unit {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 500;
+  margin-left: 2px;
+}
+.persona-side .desc {
+  margin-top: 3px;
+  font-size: 10.5px;
+  color: var(--muted);
+  line-height: 1.45;
+}
+.persona-card .takeaway {
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--text);
+  line-height: 1.5;
+  padding-top: 6px;
+  border-top: 1px dashed var(--rule);
+}
+.persona-card .takeaway b { color: var(--coral-deep); font-weight: 600; }
+
+/* ===== Section 9: 安全/慎重 ===== */
+.s9 { grid-column: 10 / 13; grid-row: 4 / 5; }
+.note-block {
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+.note-block:last-child { margin-bottom: 0; }
+.note-block .label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--coral-deep);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+.note-block.cautious .label { color: var(--gold); }
+.note-block .label .dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--coral);
+}
+.note-block.cautious .label .dot { background: var(--gold); }
+.note-block ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.note-block ul li {
+  font-size: 11.5px;
+  color: var(--text);
+  line-height: 1.5;
+  padding-left: 14px;
+  position: relative;
+}
+.note-block ul li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 7px;
+  width: 6px; height: 1.5px;
+  background: var(--coral);
+  border-radius: 1px;
+}
+.note-block.cautious ul li::before { background: var(--gold); }
+
+/* ===== Footer (⑩) ===== */
+.footer {
+  grid-column: 1 / -1;
+  grid-row: 5 / 6;
+  background: var(--text);
+  border-radius: 14px;
+  padding: 16px 28px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 24px;
+  color: #faf9f5;
+}
+.footer .num10 {
+  width: 40px; height: 40px;
+  background: var(--coral);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: #fff;
+  flex-shrink: 0;
+}
+.footer .quote {
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1.45;
+}
+.footer .quote em {
+  font-style: normal;
+  color: #f5b8a4;
+  font-weight: 600;
+}
+.footer .meta {
+  font-size: 11px;
+  color: rgba(250,249,245,0.55);
+  letter-spacing: 0.06em;
+  text-align: right;
+  line-height: 1.6;
+}
+.footer .meta b { color: #faf9f5; font-weight: 600; }
+
+/* ===== Helpers ===== */
+.coral { color: var(--coral-deep); }
+.tan { color: var(--tan); }
+.bold { font-weight: 600; }
+.mono { font-family: 'Inter', sans-serif; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============= HEADER ============= -->
+  <header class="header">
+    <div class="brand-mark">A/B</div>
+    <div class="title-block">
+      <h1>公園における社交装置の効果検証</h1>
+      <div class="sub">
+        LLM エージェントによる閉鎖環境シミュレーション
+        &nbsp;·&nbsp; <em>Happy-to-Chat ベンチ A/B 比較シミュレーション</em>
+        &nbsp;·&nbsp; 20 ペルソナ × 100 step
+      </div>
+    </div>
+    <div class="headline-card">
+      <div class="icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>
+          <circle cx="12" cy="12" r="4"/>
+        </svg>
+      </div>
+      <div>
+        <div class="label">結論</div>
+        <div class="text">"会話歓迎"の 1 文が場所を変え、ペア網羅と長文化を引き上げた。だが副作用として、静か志向のエージェントを排除する。</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============= ① 先に結論 ============= -->
+  <section class="card s1">
+    <div class="card-head">
+      <div class="card-num">1</div>
+      <div class="card-title">先に結論</div>
+    </div>
+    <div class="card-body">
+      <ul class="bullets">
+        <li><span class="num">1</span><span>プロンプト <b>1 文</b>で中央ベンチの占有が <b>×5</b> に。会話の場所が一点に集中した</span></li>
+        <li><span class="num">2</span><span>ユニークペア網羅は <b>67% vs 46%</b>。広く知り合うのは A 条件、深く繋がるのは B 条件</span></li>
+        <li><span class="num">3</span><span>後半メッセージは <b>+59% 長文化</b>。関係深化に伴って自己開示と提案が増えた</span></li>
+        <li><span class="num">4</span><span class="neg">⚠</span><span><span class="neg">ただし副作用</span>。静か志向の Agent 11 は完全に孤立し、送受信ゼロに</span></li>
+      </ul>
+    </div>
+    <div class="card-foot">数値はすべて COMPARISON_REPORT.md より直接引用</div>
+  </section>
+
+  <!-- ============= ② 確認セット ============= -->
+  <section class="card s2">
+    <div class="card-head">
+      <div class="card-num coral">2</div>
+      <div class="card-title">A/B 条件 ― 差分はベンチへの 1 文</div>
+      <div class="card-sub">同一公園・ペルソナ・LLM</div>
+    </div>
+    <div class="card-body">
+      <div class="cond-grid">
+        <div class="cond-card a">
+          <div class="tag">A 条件</div>
+          <div class="name">会話歓迎ベンチ</div>
+          <div class="signal">"This is a Happy-to-Chat Bench. Anyone sitting here is signaling 'I am open to chat with strangers.'"</div>
+          <div class="meta"><span>完走 <b>93/100 step</b></span><span>定員 <b>4 名</b></span></div>
+        </div>
+        <div class="cond-card b">
+          <div class="tag">B 条件</div>
+          <div class="name">ふつうのベンチ</div>
+          <div class="signal">追記なし。物理プロパティ（位置・サイズ・定員）は完全同一。</div>
+          <div class="meta"><span>完走 <b>100/100 step</b></span><span>定員 <b>4 名</b></span></div>
+        </div>
+      </div>
+      <div class="diff-note">
+        差分は <b>agent.py:339-344</b> の 1 つの条件分岐のみ。他のすべての変数は固定。
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= ⑥ 結果テーブル ============= -->
+  <section class="card s6">
+    <div class="card-head">
+      <div class="card-num coral">6</div>
+      <div class="card-title">主要 KPI ― 1 文が生んだ 6 つの差</div>
+      <div class="card-sub">step 当たりで公平比較</div>
+    </div>
+    <div class="card-body">
+      <table class="kpi-table">
+        <thead>
+          <tr>
+            <th>指標</th>
+            <th class="a-col">A：会話歓迎</th>
+            <th class="b-col">B：ふつう</th>
+            <th>倍率／差</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>中央ベンチ占有（最終）</td>
+            <td class="a-cell">14 名</td>
+            <td class="b-cell">2-3 名</td>
+            <td class="ratio up">×5.0</td>
+          </tr>
+          <tr>
+            <td>「ベンチ」内部言及</td>
+            <td class="a-cell">1,203</td>
+            <td class="b-cell">461</td>
+            <td class="ratio up">×2.6</td>
+          </tr>
+          <tr>
+            <td>総メッセージ数（公平比較 1-93）</td>
+            <td class="a-cell">6,719</td>
+            <td class="b-cell">5,111</td>
+            <td class="ratio up">+31%</td>
+          </tr>
+          <tr>
+            <td>ユニークペア網羅</td>
+            <td class="a-cell">128 / 190</td>
+            <td class="b-cell">88 / 190</td>
+            <td class="ratio up">+47%</td>
+          </tr>
+          <tr>
+            <td>後半メッセージ長（81-100）</td>
+            <td class="a-cell">163.8 字</td>
+            <td class="b-cell">118.9 字</td>
+            <td class="ratio up">+59%</td>
+          </tr>
+          <tr>
+            <td>完全孤立者（送受信 0）</td>
+            <td class="a-cell">1 名</td>
+            <td class="b-cell">0 名</td>
+            <td class="ratio down">−</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card-foot">A 条件は装置依存型集約 ／ B 条件は分散型・テーマ依存型集約</div>
+  </section>
+
+  <!-- ============= ③ 中央メイン解説 ============= -->
+  <section class="card s3">
+    <div class="card-head">
+      <div class="card-num">3</div>
+      <div class="card-title">変わったのは"場"と"会話の形"</div>
+      <div class="card-sub">A 条件の解釈</div>
+    </div>
+    <div class="card-body">
+      <div class="essence-block">
+        <div class="lead">A 条件は「広く浅く知り合う / 後半長文化 / 異質なペアを生む」<br><em>場と関係の質を同時に書き換えた</em></div>
+      </div>
+      <div class="essence-points">
+        <div class="row"><div class="lbl">場の集約</div><div class="val">中央ベンチへの一極集中。他の場所はほぼ無人化（<b>14 名 vs 2-3 名</b>）</div></div>
+        <div class="row"><div class="lbl">関係の幅</div><div class="val">ベンチで偶然出会う異質ペアが急増（step 26-50 で <b>新規対面 +58 件</b>）</div></div>
+        <div class="row"><div class="lbl">関係の深さ</div><div class="val">平均文字数が <b>103 → 164 字</b>（+59%）。自己紹介→共通話題→個人的提案へ進む</div></div>
+        <div class="row"><div class="lbl">トップペア</div><div class="val">専業主夫 ↔ ミュージシャンが <b>148 通</b>。世代を越えた強固な接続</div></div>
+      </div>
+      <div class="deviceflow">
+        <div class="step"><b>シグナル 1 文</b>場の意味付け</div>
+        <div class="arrow">→</div>
+        <div class="step"><b>集まる場</b>異質な遭遇</div>
+        <div class="arrow">→</div>
+        <div class="step"><b>長文化</b>関係深化</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= ④ 場所別分布 ============= -->
+  <section class="card s4">
+    <div class="card-head">
+      <div class="card-num">4</div>
+      <div class="card-title">賑わいの場所はどう変わったか</div>
+      <div class="card-sub">最終 step・人数</div>
+    </div>
+    <div class="card-body">
+      <div class="bar-head">
+        <div></div><div class="a-h">A：会話歓迎</div><div class="b-h">B：ふつう</div>
+      </div>
+      <div class="bar-list">
+        <div class="bar-row">
+          <div class="place">中央ベンチ</div>
+          <div class="bar-cell a"><div class="fill" style="width:100%"></div><div class="num">14</div></div>
+          <div class="bar-cell b"><div class="fill" style="width:18%"></div><div class="num outside">2-3</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="place">噴水広場</div>
+          <div class="bar-cell a"><div class="fill" style="width:21%"></div><div class="num outside">3</div></div>
+          <div class="bar-cell b"><div class="fill" style="width:32%"></div><div class="num">4-5</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="place">花壇</div>
+          <div class="bar-cell a"><div class="fill" style="width:0%"></div><div class="num outside">0</div></div>
+          <div class="bar-cell b"><div class="fill" style="width:25%"></div><div class="num">3-4</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="place">ブランコ</div>
+          <div class="bar-cell a"><div class="fill" style="width:0%"></div><div class="num outside">0</div></div>
+          <div class="bar-cell b"><div class="fill" style="width:7%"></div><div class="num outside">1</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="place">売店</div>
+          <div class="bar-cell a"><div class="fill" style="width:7%"></div><div class="num outside">1</div></div>
+          <div class="bar-cell b"><div class="fill" style="width:11%"></div><div class="num outside">1-2</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="place">芝生</div>
+          <div class="bar-cell a"><div class="fill" style="width:7%"></div><div class="num outside">1</div></div>
+          <div class="bar-cell b"><div class="fill" style="width:0%"></div><div class="num outside">0</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="place">並木道</div>
+          <div class="bar-cell a"><div class="fill" style="width:0%"></div><div class="num outside">0</div></div>
+          <div class="bar-cell b"><div class="fill" style="width:0%"></div><div class="num outside">0</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-foot">A：一極集中（装置依存） ／ B：複数の場所に自然分散</div>
+  </section>
+
+  <!-- ============= ⑦ 創発テーマ ============= -->
+  <section class="card s7">
+    <div class="card-head">
+      <div class="card-num">7</div>
+      <div class="card-title">創発テーマ ― B 条件の「呼吸法」</div>
+    </div>
+    <div class="card-body">
+      <div class="theme-grid">
+        <div class="theme-card a-side">
+          <div class="tag">A 条件</div>
+          <div class="topic">自由会話</div>
+          <div class="pct">2<span class="unit">%</span></div>
+          <div class="desc">桜・音楽・犬・写真など分散。<br>「ベンチに集まる」が会話の起点。</div>
+        </div>
+        <div class="theme-card b-side">
+          <div class="tag">B 条件</div>
+          <div class="topic">呼吸法が公園を覆う</div>
+          <div class="pct">49<span class="unit">%</span></div>
+          <div class="desc">step 14 で命名 →「4-7-8」が <b style="color:var(--text)">1,366 通</b> に拡散。</div>
+        </div>
+      </div>
+      <div class="theme-foot">
+        装置がない B 条件では、エージェントが <b>共通テーマを内発的に生成</b>してクラスタを形成した。<br>
+        装置依存型集約（A） vs <b>テーマ依存型集約（B）</b> ― どちらも社交は成立する。
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= ⑤ 流量・ペア網羅 ============= -->
+  <section class="card s5">
+    <div class="card-head">
+      <div class="card-num">5</div>
+      <div class="card-title">メッセージ流量とペア網羅の時系列</div>
+      <div class="card-sub">step 1 → 100</div>
+    </div>
+    <div class="card-body">
+      <div class="graphs-row">
+        <div class="graph-block">
+          <div class="graph-title">step あたりメッセージ数</div>
+          <div class="graph-sub">A は後半に指数的に伸び、ピークで 160 通／step</div>
+          <svg class="graph-svg" viewBox="0 0 380 180" preserveAspectRatio="none">
+            <!-- grid -->
+            <line x1="40" y1="20" x2="40" y2="155" stroke="#ece5d4" stroke-width="1"/>
+            <line x1="40" y1="155" x2="370" y2="155" stroke="#ece5d4" stroke-width="1"/>
+            <line x1="40" y1="100" x2="370" y2="100" stroke="#f3ede0" stroke-width="1" stroke-dasharray="2,3"/>
+            <line x1="40" y1="50" x2="370" y2="50" stroke="#f3ede0" stroke-width="1" stroke-dasharray="2,3"/>
+            <!-- y axis labels -->
+            <text x="35" y="158" text-anchor="end" fill="#8e887f" font-size="9" font-family="Inter">0</text>
+            <text x="35" y="103" text-anchor="end" fill="#8e887f" font-size="9" font-family="Inter">80</text>
+            <text x="35" y="53" text-anchor="end" fill="#8e887f" font-size="9" font-family="Inter">160</text>
+            <!-- x axis labels -->
+            <text x="40" y="170" text-anchor="middle" fill="#8e887f" font-size="9" font-family="Inter">1</text>
+            <text x="205" y="170" text-anchor="middle" fill="#8e887f" font-size="9" font-family="Inter">50</text>
+            <text x="370" y="170" text-anchor="middle" fill="#8e887f" font-size="9" font-family="Inter">100</text>
+            <!-- B line: 13,22,16,56,63,44,56,61,79,71,108 at steps 1,10,20,30,40,50,60,70,80,90,100 -->
+            <polyline fill="none" stroke="#a07a55" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              points="40,144.6 69.7,135.3 102.7,141.5 135.7,107.5 168.7,101.6 201.7,113.9 234.7,107.5 267.7,104.4 300.7,93.0 333.7,97.1 370,75.8"/>
+            <!-- A line: 12,15,46,36,70,65,93,118,123,160 at steps 1,10,20,30,40,50,60,70,80,90 -->
+            <polyline fill="none" stroke="#cc785c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+              points="40,145.6 69.7,142.5 102.7,110.6 135.7,120.9 168.7,85.6 201.7,90.8 234.7,61.9 267.7,36.1 300.7,30.9 333.7,2.8"/>
+            <!-- A endpoint -->
+            <circle cx="333.7" cy="2.8" r="3.5" fill="#cc785c"/>
+            <text x="340" y="10" fill="#b35d44" font-size="10" font-weight="700" font-family="Inter">160</text>
+            <!-- B endpoint -->
+            <circle cx="370" cy="75.8" r="3" fill="#a07a55"/>
+            <text x="362" y="89" fill="#a07a55" font-size="10" font-weight="700" font-family="Inter" text-anchor="end">108</text>
+          </svg>
+          <div class="legend">
+            <span><span class="swatch a-sw"></span>A：会話歓迎（93 step 完走）</span>
+            <span><span class="swatch b-sw"></span>B：ふつう</span>
+          </div>
+          <div class="graph-stats">
+            <span>step 当たり平均：<span class="num a-num">72.2</span> vs <span class="num b-num">58.3</span></span>
+          </div>
+        </div>
+        <div class="graph-block">
+          <div class="graph-title">ユニークペア累積（最大 190）</div>
+          <div class="graph-sub">A は線形拡大、B は 88 で頭打ち（クラスタ閉鎖）</div>
+          <svg class="graph-svg" viewBox="0 0 380 180" preserveAspectRatio="none">
+            <line x1="40" y1="20" x2="40" y2="155" stroke="#ece5d4" stroke-width="1"/>
+            <line x1="40" y1="155" x2="370" y2="155" stroke="#ece5d4" stroke-width="1"/>
+            <line x1="40" y1="100" x2="370" y2="100" stroke="#f3ede0" stroke-width="1" stroke-dasharray="2,3"/>
+            <line x1="40" y1="50" x2="370" y2="50" stroke="#f3ede0" stroke-width="1" stroke-dasharray="2,3"/>
+            <!-- max line at 190 -->
+            <line x1="40" y1="20" x2="370" y2="20" stroke="#cc785c" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.4"/>
+            <text x="370" y="17" text-anchor="end" fill="#cc785c" font-size="9" font-family="Inter" opacity="0.7">max 190</text>
+            <text x="35" y="158" text-anchor="end" fill="#8e887f" font-size="9" font-family="Inter">0</text>
+            <text x="35" y="103" text-anchor="end" fill="#8e887f" font-size="9" font-family="Inter">95</text>
+            <text x="35" y="53" text-anchor="end" fill="#8e887f" font-size="9" font-family="Inter">160</text>
+            <text x="40" y="170" text-anchor="middle" fill="#8e887f" font-size="9" font-family="Inter">1</text>
+            <text x="205" y="170" text-anchor="middle" fill="#8e887f" font-size="9" font-family="Inter">50</text>
+            <text x="370" y="170" text-anchor="middle" fill="#8e887f" font-size="9" font-family="Inter">100</text>
+            <!-- A: 6,12,31,89,102,128 @ 1,10,25,50,75,100 -->
+            <polyline fill="none" stroke="#cc785c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+              points="40,150.4 69.7,145.3 119.2,129.2 201.7,79.9 284.2,68.9 366.7,46.9"/>
+            <!-- B: 8,12,39,53,74,88 @ 1,10,25,50,75,100 -->
+            <polyline fill="none" stroke="#a07a55" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              points="40,148.7 69.7,145.3 119.2,121.4 201.7,109.5 284.2,91.7 366.7,79.9"/>
+            <!-- A endpoint -->
+            <circle cx="366.7" cy="46.9" r="3.5" fill="#cc785c"/>
+            <text x="370" y="44" fill="#b35d44" font-size="10" font-weight="700" font-family="Inter" text-anchor="end">128</text>
+            <!-- B endpoint -->
+            <circle cx="366.7" cy="79.9" r="3" fill="#a07a55"/>
+            <text x="370" y="93" fill="#a07a55" font-size="10" font-weight="700" font-family="Inter" text-anchor="end">88</text>
+          </svg>
+          <div class="legend">
+            <span><span class="swatch a-sw"></span>A：会話歓迎</span>
+            <span><span class="swatch b-sw"></span>B：ふつう</span>
+          </div>
+          <div class="graph-stats">
+            <span>網羅率：<span class="num a-num">67.4%</span> vs <span class="num b-num">46.3%</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= ⑧ 個別影響 ============= -->
+  <section class="card s8">
+    <div class="card-head">
+      <div class="card-num">8</div>
+      <div class="card-title">個別の影響 ― 装置は人を選ぶ</div>
+    </div>
+    <div class="card-body">
+      <div class="persona-grid">
+        <div class="persona-card">
+          <div class="who">Agent 11</div>
+          <div class="name">昼休みのサラリーマン</div>
+          <div class="persona-row">
+            <div class="persona-side a-side">
+              <div class="tag">A 条件</div>
+              <div class="big">0<span class="unit">通 送受信</span></div>
+              <div class="desc">中央ベンチの大集団を避け、芝生で<b style="color:var(--coral-deep)">完全孤立</b>。</div>
+            </div>
+            <div class="persona-side b-side">
+              <div class="tag">B 条件</div>
+              <div class="big">101<span class="unit">通</span></div>
+              <div class="desc">花壇で他者の祖父話を聴き、<b style="color:var(--text)">緩く参加</b>。</div>
+            </div>
+          </div>
+          <div class="takeaway">静か志向のペルソナでも、<b>装置の有無で結果が逆転</b>する</div>
+        </div>
+        <div class="persona-card">
+          <div class="who">Agent 3</div>
+          <div class="name">子守をする専業主夫</div>
+          <div class="persona-row">
+            <div class="persona-side a-side">
+              <div class="tag">A 条件</div>
+              <div class="big">148<span class="unit">通 (top pair)</span></div>
+              <div class="desc">ミュージシャンと <b style="color:var(--coral-deep)">最強ペア</b>。中央へ吸引された。</div>
+            </div>
+            <div class="persona-side b-side">
+              <div class="tag">B 条件</div>
+              <div class="big">29<span class="unit">通</span></div>
+              <div class="desc">ブランコで子守に集中。<b style="color:var(--text)">最少水準</b>に周辺化。</div>
+            </div>
+          </div>
+          <div class="takeaway">中央の引力が弱まると、ペルソナ本来の役割に <b>戻る</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= ⑨ 安全/慎重 ============= -->
+  <section class="card s9">
+    <div class="card-head">
+      <div class="card-num gold">9</div>
+      <div class="card-title">読み取りの境界</div>
+    </div>
+    <div class="card-body">
+      <div class="note-block">
+        <div class="label"><span class="dot"></span>安全に言える</div>
+        <ul>
+          <li>装置 1 文で集約・流量・網羅・長文化の差は <b>頑健に</b>出る</li>
+          <li>関係深化は <b>装置依存</b>でも<b>テーマ依存</b>でも起きうる</li>
+          <li>場所の分布は装置によって <b>大きく</b>変化する</li>
+        </ul>
+      </div>
+      <div class="note-block cautious">
+        <div class="label"><span class="dot"></span>慎重に言うべき</div>
+        <ul>
+          <li>N=1 seed の比較。再現性は別 seed で要検証</li>
+          <li>呼吸法の創発は <b>4 名のペルソナ</b>に依存した可能性</li>
+          <li>LLM の生成性質に乗った結果。実人間で同じとは言えない</li>
+          <li>完走 step が非対称（A 93／B 100）。step 当たりで補正済み</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= ⑩ FOOTER ============= -->
+  <footer class="footer">
+    <div class="num10">10</div>
+    <div class="quote">
+      ひとことで言うと ― <em>装置 1 文は仲を作るのではない</em>。
+      仲を作りやすい場所を増やし、<em>同時に静か志向の人を弾く</em>。
+    </div>
+    <div class="meta">
+      <b>A</b> = 会話歓迎ベンチ &nbsp;／&nbsp; <b>B</b> = ふつうのベンチ<br>
+      Source: COMPARISON_REPORT.md ・ output/ ・ output_ordinary/
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>

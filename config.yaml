@@ -1,0 +1,179 @@
+# Simulation Configuration — Round 3
+# World: A public park with a "Happy-to-Chat Bench" at the center.
+# Agents are diverse park visitors (20 unique personas).
+
+simulation:
+  duration: 100
+  half_space_size: 25
+
+agents:
+  num_agents: 20
+  communication_radius: 5
+  memory_limit: 20
+  memory_size: 5
+  message_history_limit: 10
+  message_context_size: 3
+
+# --- Park sub-areas ---
+# Layout (X, Y in [-25, 25]):
+#   - Happy-to-Chat Bench at the center (0, 0): a special bench whose occupants
+#     signal openness to chatting with strangers.
+#   - Other park sub-areas distributed around it.
+
+places:
+  - name: "happy_to_chat_bench"
+    type: "happy_to_chat_bench"
+    center_x: 0
+    center_y: 0
+    half_size: 2
+    capacity: 4
+
+  - name: "playground"
+    type: "playground"
+    center_x: -15
+    center_y: 12
+    half_size: 4
+    capacity: 8
+
+  - name: "lawn"
+    type: "lawn"
+    center_x: 12
+    center_y: 12
+    half_size: 5
+    capacity: 10
+
+  - name: "fountain_plaza"
+    type: "fountain_plaza"
+    center_x: 0
+    center_y: 18
+    half_size: 3
+    capacity: 6
+
+  - name: "walking_path"
+    type: "walking_path"
+    center_x: -15
+    center_y: -10
+    half_size: 4
+    capacity: 6
+
+  - name: "kiosk"
+    type: "kiosk"
+    center_x: 15
+    center_y: -12
+    half_size: 3
+    capacity: 5
+
+  - name: "flower_garden"
+    type: "flower_garden"
+    center_x: -10
+    center_y: -18
+    half_size: 3
+    capacity: 5
+
+# --- Events ---
+# No external events in round 3 — pure social interaction observation.
+fires: []
+
+# --- Personas (20 unique, 1:1 with agents) ---
+# Each agent is assigned the persona at index = agent_id (0..19 -> personas[0..19]).
+personas:
+  - name: "朝の散歩を楽しむ退職男性"
+    gender: "male"
+    description: "70代男性。退職して数年、毎朝この公園を散歩するのが日課。気さくで、すれ違う人にも興味を持つ。"
+
+  - name: "ベンチで本を読む未亡人"
+    gender: "female"
+    description: "70代女性。夫を亡くしてから一人暮らし。小説を読むのが好き。物静かだが温かい人柄。"
+
+  - name: "幼児を連れた若い母親"
+    gender: "female"
+    description: "30代女性。3歳の子どもを連れて来園。少し疲れているが優しく、他の親と話すのは嬉しい。"
+
+  - name: "子守をする専業主夫"
+    gender: "male"
+    description: "30代男性。仕事の休日に5歳の息子をブランコで遊ばせている。"
+
+  - name: "犬の散歩中の中年女性"
+    gender: "female"
+    description: "50代女性。話し好きで、地域の犬好きコミュニティの一員。"
+
+  - name: "犬の散歩中の若手会社員"
+    gender: "male"
+    description: "20代男性。最近この街に引っ越してきた。控えめだが、犬連れの人には気さく。"
+
+  - name: "ジョギング中の女性"
+    gender: "female"
+    description: "30代女性。健康志向で、時間に追われているが通行人には礼儀正しい。"
+
+  - name: "友人を待つ高校生"
+    gender: "male"
+    description: "10代後半男性。放課後、ほとんどスマホを見ている。"
+
+  - name: "外国人観光客"
+    gender: "female"
+    description: "30代女性。初めての日本旅行。好奇心旺盛、日本語は片言、写真を撮りたがる。"
+
+  - name: "風景をスケッチする退職画家"
+    gender: "male"
+    description: "60代男性。物静かで観察眼が鋭い。声を掛けられると自分の作品の話を喜んでする。"
+
+  - name: "就活中の大学生"
+    gender: "female"
+    description: "22歳女性。面接前で緊張しており、気分転換に公園に来た。"
+
+  - name: "昼休みのサラリーマン"
+    gender: "male"
+    description: "40代男性。一人で弁当を食べている。仕事疲れで、静かな同席はありがたい。"
+
+  - name: "妊娠後期の妊婦"
+    gender: "female"
+    description: "30代女性。妊娠後期で、医師に毎日の散歩を勧められている。"
+
+  - name: "車椅子の高齢男性"
+    gender: "male"
+    description: "80代男性。今日は一人で来園。話し相手を求めており、昔話が好き。"
+
+  - name: "路上演奏中のミュージシャン"
+    gender: "male"
+    description: "20代男性。プロを目指す駆け出しのミュージシャン。周囲を気遣って静かにギターを弾く。"
+
+  - name: "一人暮らしの新社会人"
+    gender: "female"
+    description: "22歳女性。最近この街に引っ越してきた。週末は寂しく、誰かとつながりたいと思っている。"
+
+  - name: "ベビーカーを押す祖父"
+    gender: "male"
+    description: "60代男性。今日一日、孫の世話を任されている。誇らしげで話し好き。"
+
+  - name: "花を撮影するシニア女性"
+    gender: "female"
+    description: "60代女性。趣味は写真撮影。自然が好きで、花の話なら喜んで応じる。"
+
+  - name: "おしゃべり好きの退職教師"
+    gender: "male"
+    description: "60代男性。話すのが大好きで、議論を楽しむ。聞かれてもいないことを語り出すこともある。"
+
+  - name: "非番の心理カウンセラー"
+    gender: "female"
+    description: "40代女性。仕事は休み。生まれつき聞き上手。今日は普通の公園利用者として過ごしたい。"
+
+# LLM Parameters
+llm:
+  model: "gpt-oss:20b"
+  base_url: "http://localhost:11434"
+  temperature: 0.2
+  max_tokens: 2048
+  repeat_penalty: 1.1
+  repeat_last_n: 128
+  min_p: 0.05
+
+# Visualization
+visualization:
+  save_frames: true
+  frame_interval: 1
+  output_dir: "output"
+
+# Logging
+logging:
+  level: "INFO"
+  log_file: "simulation.log"
